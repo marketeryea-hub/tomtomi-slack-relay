@@ -11,7 +11,7 @@ module.exports = function handler(req, res) {
     return res.status(405).json({ error: 'POST만 가능합니다' });
   }
 
-  var BOT_TOKEN = 'xoxb-7144566404977-10878764230673-4u76Ho3VmbbeOykkwZlg3E';
+  var BOT_TOKEN = 'xoxb-7144566404977-10878764230673-4u76Ho3VmbbeOykkwZlg3EWQ';
   var channel = req.body.channel || '책임-운영관련';
   var text = req.body.text || '';
 
