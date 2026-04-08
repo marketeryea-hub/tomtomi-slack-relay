@@ -11,14 +11,25 @@ module.exports = function handler(req, res) {
     return res.status(405).json({ error: 'POST만 가능합니다' });
   }
 
-  const WEBHOOK_URL = 'https://hooks.slack.com/services/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';
+  var BOT_TOKEN = 'xoxb-7144566404977-10878764230673-4u76Ho3VmbbeOykkwZlg3E';
+  var channel = req.body.channel || '책임-운영관련';
+  var text = req.body.text || '';
 
-  fetch(WEBHOOK_URL, {
+  fetch('https://slack.com/api/chat.postMessage', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(req.body),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + BOT_TOKEN
+    },
+    body: JSON.stringify({ channel: channel, text: text })
   })
-    .then(function(response) { return response.text(); })
-    .then(function(text) { res.status(200).json({ result: text }); })
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+      if (data.ok) {
+        res.status(200).json({ result: 'ok' });
+      } else {
+        res.status(400).json({ error: data.error });
+      }
+    })
     .catch(function(error) { res.status(500).json({ error: error.message }); });
 };
