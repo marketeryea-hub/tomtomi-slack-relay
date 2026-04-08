@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -13,16 +13,12 @@ export default async function handler(req, res) {
 
   const WEBHOOK_URL = 'https://hooks.slack.com/services/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';
 
-  try {
-    const response = await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(req.body),
-    });
-
-    const text = await response.text();
-    res.status(response.status).json({ result: text });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
+  fetch(WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(req.body),
+  })
+    .then(function(response) { return response.text(); })
+    .then(function(text) { res.status(200).json({ result: text }); })
+    .catch(function(error) { res.status(500).json({ error: error.message }); });
+};
