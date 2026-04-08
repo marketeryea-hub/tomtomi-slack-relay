@@ -11,7 +11,7 @@ module.exports = function handler(req, res) {
     return res.status(405).json({ error: 'POST만 가능합니다' });
   }
 
-  const WEBHOOK_URL = 'https://hooks.slack.com/services/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';
+  const WEBHOOK_URL = 'https://hooks.slack.com/services/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';
 
   fetch(WEBHOOK_URL, {
     method: 'POST',
